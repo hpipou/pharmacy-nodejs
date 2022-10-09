@@ -177,7 +177,7 @@ routes.get("",(req,res)=>{
     
     models.Profil.findAll({attributes:['id','fname','lname','phone','adresse','country','imgURL'], include:{model:models.User, attributes:['id','email','username','status','roleName']}})
     .then((data)=>{
-        if(data==null){
+        if(data.length<1){
             return res.status(403).json("PROFIL NOT FOUND")
         }else{
             return res.status(200).json(data)
