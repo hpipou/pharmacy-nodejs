@@ -4,6 +4,7 @@ const models = require("../models")
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 require("dotenv").config()
+const authentifcation = require("../middleware/authentication")
 
 /////////////////////////////////////////////////////////
 // add new user
@@ -110,7 +111,7 @@ routes.post("/login",(req,res)=>{
 /////////////////////////////////////////////////////////
 // edit password
 /////////////////////////////////////////////////////////
-routes.put("/password",(req,res)=>{
+routes.put("/password", authentifcation, (req,res)=>{
 
     const email = req.body.email
     const password=req.body.password
@@ -150,7 +151,7 @@ routes.put("/password",(req,res)=>{
 /////////////////////////////////////////////////////////
 // edit username
 /////////////////////////////////////////////////////////
-routes.put("/username",(req,res)=>{
+routes.put("/username", authentifcation, (req,res)=>{
 
     const email = req.body.email
     const username= req.body.username
@@ -197,7 +198,7 @@ routes.put("/username",(req,res)=>{
 /////////////////////////////////////////////////////////
 // show one user
 /////////////////////////////////////////////////////////
-routes.get("/:id",(req,res)=>{
+routes.get("/:id", (req,res)=>{
 
     const id = req.params.id
 
@@ -224,13 +225,9 @@ routes.get("",(req,res)=>{
 /////////////////////////////////////////////////////////
 // delete user
 /////////////////////////////////////////////////////////
-routes.delete("",(req,res)=>{
+routes.delete("",authentifcation,(req,res)=>{
 
-    if(req.headers.authorization==null || req.headers.authorization == undefined){return res.status(403).json("TOKEN UNDEFINED")}
-    
     const tokenBearer = req.headers.authorization.split(' ')[1]
-    
-    if(jwt.decode(tokenBearer)==null || jwt.decode(tokenBearer) == undefined){return res.status(403).json("USED ID UNDEFINED")}
     const tokenDecoded = jwt.decode(tokenBearer)
     const idUser = tokenDecoded.id
 
