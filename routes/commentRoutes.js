@@ -60,7 +60,7 @@ routes.post("", authentication, (req,res)=>{
 ////////////////////////////////////////////////
 // edit comment
 ////////////////////////////////////////////////
-routes.put("", (req,res)=>{
+routes.put("", authentication, (req,res)=>{
 
     const comment = req.body.comment 
     if(comment==undefined || comment==null){return res.status(403).json("COMMENT UNDEFINED")}
