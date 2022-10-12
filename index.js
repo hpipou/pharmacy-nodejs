@@ -1,6 +1,10 @@
 const express = require("express")
 const app = express()
 const cors = require("cors")
+const helmet = require("helmet")
+
+// secure HTTP Headers
+app.use(helmet())
 
 // deploy cors & policy
 app.use(express.json())
