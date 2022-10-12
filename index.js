@@ -2,9 +2,13 @@ const express = require("express")
 const app = express()
 const cors = require("cors")
 const helmet = require("helmet")
+const morgan = require("morgan")
 
 // secure HTTP Headers
 app.use(helmet())
+
+// SHOW LOGS IN MY CONSOLE
+app.use(morgan('tiny'))
 
 // deploy cors & policy
 app.use(express.json())
